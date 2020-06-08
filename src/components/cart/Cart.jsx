@@ -4,14 +4,15 @@ import { useSelector } from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout'
 import './Cart.css'
 import logo from '../../logo.svg'
-import data1 from './data1'
 import { BsArrowRight } from 'react-icons/bs'
 import { Button } from 'react-bootstrap'
-import { emptyCart } from '../../redux/reducers/cartReducer'
+import { emptyCart, updateQuantity, removeItem } from '../../redux/reducers/cartReducer'
 import paypal from './paypal.jpg'
 
 const Cart = (props) => {
-   const cart = useSelector(state => state)
+   const [ qty, setQty ] = useState(1)
+   const [ tempIndex, setTempIndex ] = useState(0)
+   const cart = useSelector(state => state.cartReducer)
    console.log("added cart", cart)
    const dispatch = useDispatch();
    
@@ -23,15 +24,24 @@ const Cart = (props) => {
    }
 
    const handleChange = (e, i) => {
-      console.log(e.target.value)
-      console.log(i)
+      setQty(e.target.value)
+      setTempIndex(i)
    }
+
+   console.log(qty, tempIndex); 
+   const updateItem = ind => {
+      if ( tempIndex === ind ) {
+         dispatch(updateQuantity(tempIndex, qty))
+      }
+   }
+
+   const remove = index => dispatch(removeItem(index))
    return (
       <div className='cart-component'>
       
          <div className='cart-items' >
-         {data1.length>0 ? data1.map((item, i) => 
-            <div key={i} className='single-cart-item' > 
+         {cart.length>0 ? cart.map((item, index) => 
+            <div key={index} className='single-cart-item' > 
                <img src={item.images} className='cart-image' /> 
                <div className='right-box'>
                   <h6> {item.name} </h6>
@@ -40,9 +50,9 @@ const Cart = (props) => {
                   <p> QTY: {item.quantity} </p>
                   <p className='qty-and-update' >
                      {/*<label>Qty: <select>{[...Array(50)].map((e, i)=><option value={i+1} onChange={e => handleChange(e, item.id)} key={i}>{i+1}</option>)}</select></label>*/}
-                     <input type='number' min='1' className='quantity-input' />
-                     <Button variant="outline-dark" size="sm" >UPDATE</Button>{' '}
-                     <Button variant="outline-dark" size="sm" >REMOVE</Button>{' '}
+                     <input type='number' min='1' className='quantity-input' onChange={e => handleChange(e, index)} />
+                     <Button variant="outline-dark" size="sm" onClick={() => updateItem(index)} >UPDATE</Button>{' '}
+                     <Button variant="outline-dark" size="sm" onClick={() => remove(index)} >REMOVE</Button>{' '}
                   </p>
                </div>
             </div>
@@ -57,7 +67,7 @@ const Cart = (props) => {
                <h5 className='order-summary-line' ><span>PURCHASED ITEMS</span><span>{total.toFixed(2)}</span> </h5>
                <h5 className='order-summary-line' ><span>DELIVERY</span><span>FREE</span> </h5>
                <h5 className='order-summary-line' ><span>SALES TAX ( 8%) </span><span>{(total*0.08).toFixed(2)}</span> </h5>
-               <input placeholder='Enter promo code' className='order-summary-input' />
+               <input placeholder='Enter promo code' className='promo-code-input' />
                <h5 className='order-summary-line' style={{fontWeight: '800'}} ><span>GRANT TOTAL</span><span>{grantTotal}</span> </h5>
             </div>
             <StripeCheckout name='SOMERTON' description='making a payment' 

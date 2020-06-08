@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import data from '../products/data'
+import data from '../../assets/data'
 import { Carousel, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { addToCart } from '../../redux/reducers/cartReducer'

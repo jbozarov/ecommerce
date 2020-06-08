@@ -1,12 +1,17 @@
-import React from 'react'
-import data  from './data.js'
+import React, { useState, useEffect } from 'react'
 import { Breadcrumb, Card, Button } from 'react-bootstrap'
 import { Link, withRouter } from 'react-router-dom'
 import { BsArrow90DegLeft } from 'react-icons/bs'
 import './Products.css'
+import { useSelector, connect } from 'react-redux'
 
-const Products = () => {
-
+const Products = (props) => {
+   const [ localData, setLocalData ] = useState([])
+   // const data = useSelector(state => state)
+   useEffect(() => {
+      setLocalData(props.data)
+   }, [])
+   console.log("14 ", localData)
    return (
       <div>
          <div className='breadcrumb-box' >
@@ -19,7 +24,7 @@ const Products = () => {
          </div>
 
          <div className='product-container'  >
-         {data.map((item, i) => (
+         {localData.length>1 && localData.map((item, i) => (
             <div key={i} className="product-container-box" >
                <Card style={{ width: '25rem', height: '40rem', border: 'none' }}>
                   { /*<Card.Img variant="top" src={item.images[0]} className="card-image" /> */}
@@ -48,5 +53,11 @@ const Products = () => {
    )
 }
 
+function mapStateToProps(state) {
+   return {
+      data: state.dataReducer
+   }
+}
 
-export default withRouter(Products); 
+
+export default connect(mapStateToProps, {})(withRouter(Products)); 

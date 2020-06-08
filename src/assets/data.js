@@ -1,7 +1,7 @@
 const data = [
    {
      id: 0,
-     name: "Amazon new marathon sports men's shoes couple models cushion shoes running shoes",
+     name: 'Amazon new marathon sports men\'s shoes couple models cushion shoes running shoes',
      availibility: true,
      price: 144.98,
      quantity: 18,
@@ -15,7 +15,7 @@ const data = [
    },
    {
      id: 1,
-     name: " Season Sport Men Shoes Breathable Lace-up Mesh Upper Lightweight Running Shoes",
+     name: "Season Sport Men Shoes Breathable Lace-up Mesh Upper Lightweight Running Shoes",
      availibility: true,
      price: 61.96,
      quantity: 14,
