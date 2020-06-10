@@ -3,42 +3,47 @@ import logo from './logo.svg'
 import './Header.css';
 import DropdownMenu from '../dropDownMenu/DropDownMenu';
 import { Link, withRouter } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { search } from '../../redux/reducers/dataReducer'
 
 
 
-const Header = () => {
+const Header = props => {
   const [ dropdownActive, setDropdownActive ] = useState(true)
   const [ searchInput, setSearchInput ] = useState('')
+  const cart = useSelector(state => state.cartReducer)
+  let qtyCount = cart.reduce((a, b) => a + b.cartQuantity, 0);
+  const dispatch = useDispatch();  
 
   const toggleMenu = () => setDropdownActive(!dropdownActive)
   const enterMenu = () => setDropdownActive(false)
   const leaveMenu = () => setDropdownActive(true)
-  let qtyCount = 0;
-  let cartButtonStyle = { backgroundColor: 'red', color: 'white'}
-
+console.log(props)
+ console.log("header path ", props.location)
   const handleChange = e => {
-     
-  }
+     setSearchInput(e.target.value)
+   }
+   dispatch(search(searchInput))
     return (
          <div className="header-container">
             <div className="navBarContainer" >
                <div className="topNav">
-                  <div className="userLinks" >
+                  <div className="upper-box" >
                      <img src={logo} width={40} />
-                     <p>Find a Store</p>
-                     <p>Sign In</p>
-                     <div className="cartButton" style={qtyCount ? cartButtonStyle : null}>
-                        <Link to='/cart'><p>Cart ({qtyCount})</p></Link>
+                     <h5>Contact Us</h5>
+                     {props.location.pathname === '/admin' ? <Link to='/'><h5>Log out</h5></Link> : <Link to='/admin'><h5>Admin login</h5></Link> }
+                     <div className={qtyCount ? 'cart-has-item' : null}>
+                        <Link to='/cart'><h5>Cart({qtyCount})</h5> </Link>
                      </div>
                   </div>
                   <div className="lower-box" >
-                     <ul className="navLinks"  >
+                     <ul className="nav-bar"  >
                         <li onClick={toggleMenu} onMouseEnter={enterMenu}>{"MEN'S"}</li>
                         <li onClick={toggleMenu} onMouseEnter={enterMenu}>{"WOMEN'S"}</li>
                         <li onClick={toggleMenu} onMouseEnter={enterMenu}>KIDS</li>
-                        <li onClick={toggleMenu} onMouseEnter={enterMenu}>HOT DEALS</li>
+                        <li onClick={toggleMenu} onMouseEnter={enterMenu}>DEALS</li>
                      </ul>
-                     <input className='search-input' value={searchInput} placeholder="Search" onChange={e => handleChange(e)} />
+                     {props.location.pathname === '/tshirts' ? <input className='search-input' value={searchInput} placeholder="Search name, serial# or max-price" onChange={e => handleChange(e)} /> : null } 
                   </div>
                </div>
                <div className="desktopDropdownInstanceContainer">

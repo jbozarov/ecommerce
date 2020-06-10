@@ -1,4 +1,5 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 .cart-component{
    position: relative;
    min-height: 100vh;
@@ -55,7 +56,7 @@
 
 .cart-image{
    width: 200px;
-   height: 200px;
+   height: 230px;
 }
 
 
@@ -110,4 +111,21 @@
    margin: auto;
    font-size: 18px;
    padding-left: 10px;
+}
+
+.cart-toastify{
+   width: 150%;
+   height: 10vh;
+   font-size: 15px;
+   border-radius: 35px;
+   text-align: center;
+   font-weight: 800;
+}
+
+.empty-cart{
+   margin-top: 100px;
+   font-family: 'Poiret One', cursive; 
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }

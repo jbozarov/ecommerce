@@ -1,7 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
+
+.breadcrumb-box-single{
+   width: 70%;
+   margin: auto;
+   padding-bottom: 0;
+   background-color: white;
+   color: black;
+   margin-bottom: 40px;
+}
+
 .single-component{
    width: 70%;
+   height: 100vh;
    margin: auto;
    display: flex;
    flex-direction: row;
@@ -12,6 +23,7 @@
    width: 60%;
    height: 550px;
    color: black;
+   cursor: pointer;
 }
 
 .carousel-img{
@@ -131,3 +143,12 @@
    border-radius: 5px;
 }
 
+
+.toastify{
+   width: 180%;
+   height: 10vh;
+   font-size: 15px;
+   border-radius: 35px;
+   text-align: center;
+   font-weight: 800;
+}

@@ -43,13 +43,12 @@ export const cartReducer = (state = initialState, action ) => {
 
             let cartItems = []; 
             var toggle = true; 
-            console.log('state ', state)
 
             cartItems = state.map(product => {
                if (product.id === payload.id && product.images === payload.images && product.size === payload.size ){
                   toggle = false
-                  product.quantity += 1; 
-                  product.totalPrice = product.price * product.quantity; 
+                  product.cartQuantity += 1; 
+                  product.totalPrice = product.price * product.cartQuantity; 
                   return product
                } 
                return product; 
@@ -59,10 +58,10 @@ export const cartReducer = (state = initialState, action ) => {
                cartItems.push({
                   id: payload.id,
                   name: payload.name,
-                  availibility: payload.availibility,
                   images: payload.images,
                   price: payload.price, 
-                  quantity: payload.quantity, 
+                  quantity: payload.quantity,
+                  cartQuantity: payload.cartQuantity, 
                   serial: payload.serial, 
                   size: payload.size, 
                   totalPrice: payload.totalPrice
@@ -79,8 +78,8 @@ export const cartReducer = (state = initialState, action ) => {
          let updatedCart = []
          updatedCart = state.map((product, i) => {
             if (i === parseInt(index)) {
-               product.quantity = parseInt(newQty)
-               product.totalPrice = product.price * product.quantity;
+               product.cartQuantity = parseInt(newQty)
+               product.totalPrice = product.price * product.cartQuantity;
             }
             return product
          })
@@ -89,7 +88,6 @@ export const cartReducer = (state = initialState, action ) => {
 
       case REMOVE_ITEM : {
          let index = payload
-         console.log('Index to be removed ', index)
          let filtered = state.filter((product, i) => i !== parseInt(index))
          return [...filtered]
       }

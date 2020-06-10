@@ -7,8 +7,11 @@
 
    .header-container{
      width: 100%;
-     height: 20vh;
+     height: 15vh;
      display: flex;
+     border-bottom: solid #e6e6e6 0.5px;
+     margin-bottom: 20px;
+     background-color: whitesmoke;
    }
  
    .navBariPad {
@@ -30,7 +33,7 @@
      font-weight: 900;
    }
  
-   .userLinks {
+   .upper-box {
      width: auto;
      display: flex;
      flex-direction: row;
@@ -41,26 +44,33 @@
      font-size: 0.8em;
      letter-spacing: 0.07em;
      margin-bottom: 20px;
-     margin-top: 10px;
-     background-color: yellow;
+     margin-top: 10px
    }
  
-   .userLinks a {
+   .upper-box a {
      text-decoration-line: none;
      font-weight: 900;
      color: #2A2A2A;
      height: 100%;
    }
  
-   .cartButton {
+   .cart {
      height: 100%;
-     width: auto;
+     width: 80px;
      padding: 0 1.5em;
      display: flex;
-     align-items: center;
+     flex-direction: row;
+     font-size: 20px;
+   }
+
+   .cart-has-item{
+      background-color: #FA8072;
+      color: white;
+      padding: 2px 15px;
+      border-radius: 5%;
    }
  
-   .navLinks {
+   .nav-bar {
      width: 100%;
      height: 85%;
      display: flex;
@@ -75,28 +85,28 @@
      margin-bottom: 0;
    }
  
-   .navLinks li {
+   .nav-bar li {
      padding-right: 2.5em;
      list-style-type: none;
    }
  
-   .navLinks a {
+   .nav-bar a {
      text-decoration-line: none;
      font-weight: 900;
      color: #2A2A2A;
    }
  
-   .navLinks a:visited {
+   .nav-bar a:visited {
      color: #2A2A2A;
    }
  
-   .navLinks a:hover {
+   .nav-bar a:hover {
      color: #E72B1E;
    }
  
    .search-input {
       height: 25px;
-      width: 300px;
+      width: 400px;
       background-color: transparent;
       color: black;
       outline: none;
@@ -111,7 +121,7 @@
   }
 
   .search-input::placeholder{
-     font-weight: 600;
+     font-weight: 400;
      font-size: 15px;
      
   }
@@ -172,11 +182,11 @@
      background-color: yellow;
    } */
  
-   .userLinks {
+   .upper-box {
        font-size: 0.8em;
    }
  
-   .navLinks li{
+   .nav-bar li{
       height: 5vh;
       padding-bottom: 0;
       margin-bottom: 0;

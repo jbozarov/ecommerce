@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import data from '../../assets/data'
-import { Carousel, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { Carousel, Breadcrumb } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { addToCart } from '../../redux/reducers/cartReducer'
+import { toast, Flip } from 'react-toastify'
+import { BsArrow90DegLeft } from 'react-icons/bs'
+import { Link, withRouter } from 'react-router-dom'
 import './Single.css'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure();
 
 const Single = (props) => {
 const [ item, setItem ] = useState({})
@@ -15,16 +19,19 @@ const dispatch = useDispatch();
 
    useEffect(() => {
       if (props.match.params.product_id) {
-         let thisItem = data.filter((val, ind) => ind === parseInt(props.match.params.product_id))[0]
+         let thisItem = props.data.filter((val, ind) => ind === parseInt(props.match.params.product_id))[0]
          let firstImage = thisItem.images[0]
          setItem(thisItem)
          setSelectedColor(firstImage)
       }
    }, [])
 
+   // const data1 = useSelector(state => state.dataReducer)
+
    const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
     }
+
 
     const selectImage = ind => {
        let imgUrl = item.images[ind]
@@ -32,15 +39,34 @@ const dispatch = useDispatch();
     }
     const prepForCart = () => {
       let addedItem = { 
-         ...item, images: selectedColor, size: selectedSize, quantity: 1, totalPrice: item.price
+         ...item, images: selectedColor, size: selectedSize, cartQuantity: 1, totalPrice: item.price
       }
+   
       dispatch(addToCart(addedItem));
+      toast.success(`${item.name} is added to your cart`, {
+         closeButton: false,
+         transition: Flip,
+         className: 'toastify',
+         position: "top-center",
+         autoClose: 1500,
+      });
     }
+    
 
    return (
-      <div className="single-component" >
+      <div>
+    
+      
+         <div className='breadcrumb-box-single' >
+            <Breadcrumb>
+               <Breadcrumb.Item ><Link to='/'>HOME</Link></Breadcrumb.Item>
+               <Breadcrumb.Item active><Link to='/tshirts'>T-SHIRTS</Link></Breadcrumb.Item>
+               <Breadcrumb.Item active>  {`${item.manufacturer} T-Shirt #${item.serial}`} </Breadcrumb.Item>
+            </Breadcrumb>
+         </div>
+         <div className="single-component" >
          <div className='carousel-container' >
-            <Carousel activeIndex={index} onSelect={handleSelect}>
+            <Carousel activeIndex={index} onSelect={handleSelect} interval={3000} >
                <Carousel.Item>
                   <img src={item.images && item.images[0]} alt={item.name} className="carousel-img" />
                </Carousel.Item>
@@ -86,14 +112,16 @@ const dispatch = useDispatch();
             </div>
          </div>
       </div>
+
+      </div>
    )
 }
 
 function mapStateToProps(state) {
    return {
-      cart: state.cartReducer
+      data: state.dataReducer
    }
 }
 
 
-export default connect(mapStateToProps, {})(Single);  
+export default connect(mapStateToProps, {})(withRouter(Single));  
